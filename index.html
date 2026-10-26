@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Plate</title>
-<meta name="description" content="Plate keeps your calendar organized. Text it a screenshot or a message and it adds the event for you.">
+<meta name="description" content="Plate is a text message assistant that tells you the one next thing to do, using your Google Calendar to know when you are free.">
 <style>
   :root { --bg:#faf8f4; --ink:#1c1b19; --muted:#6a655d; --accent:#c8532b; --line:#e4dfd6; }
   @media (prefers-color-scheme: dark) { :root { --bg:#161514; --ink:#f3efe8; --muted:#a39d92; --accent:#ee7a52; --line:#2c2a27; } }
@@ -33,25 +33,27 @@
 
   <h2>What it does</h2>
   <ol>
-    <li>You text Plate a screenshot, a photo of a flyer, or a message with a date in it.</li>
-    <li>Plate reads it and works out the event: what, when and where.</li>
-    <li>It adds the event to your Google Calendar, or asks you one short question if it is unsure.</li>
-    <li>It tells you what it did. You can say "undo" to remove it.</li>
+    <li>You text Plate the things you need to get done, in plain words. You can also text a photo of a flyer or a screenshot.</li>
+    <li>Plate keeps your list and texts you one next thing to do, at a time that fits your day.</li>
+    <li>You reply in plain words, like "done", "push it", or "I have 30 minutes free". Plate reshuffles your day.</li>
+    <li>Optional: you can connect your Google Calendar so Plate knows when you are busy. Plate only reads your calendar. It never adds, changes or deletes anything on it.</li>
   </ol>
 
   <h2 id="privacy">Privacy</h2>
   <ul>
-    <li><b>What Plate keeps:</b> your phone number, the events it adds for you, and the text of your messages.</li>
+    <li><b>What Plate keeps:</b> your phone number, the profile you give it (like your wake time and class hours), your task list, and the text of your messages.</li>
     <li><b>Screenshots and photos:</b> read once and deleted right after.</li>
-    <li><b>Your calendar:</b> Plate only adds and removes events that it created. It never deletes your own events.</li>
-    <li><b>Sharing:</b> Plate does not sell your information and does not share it with anyone for marketing. Message text is processed by an AI service (Anthropic) and a texting service (Twilio) only to do the job you asked for.</li>
+    <li><b>Your Google Calendar (only if you connect it):</b> Plate asks for read-only access. It reads the titles and times of your events for the next 7 days, only to know when you are busy. It stores those titles and times, and an encrypted sign-in token so it can refresh them. It never creates, edits or deletes events.</li>
+    <li><b>Disconnect any time:</b> text "disconnect calendar" and Plate deletes your token and the calendar events it stored. You can also remove Plate's access in your Google Account settings.</li>
+    <li><b>Sharing:</b> Plate does not sell your information and does not share it with anyone for marketing. Your messages and your schedule (including calendar event titles and times, if you connect your calendar) are processed by an AI service (Anthropic) and a texting service (Twilio) only to do the job you asked for. People who run Plate can see your data only to fix problems you report.</li>
+    <li><b>Google user data:</b> Plate's use and transfer of information received from Google APIs to any other app will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. Google calendar data is used only to provide the scheduling feature you see in Plate, and is not used for advertising or to train AI models.</li>
     <li><b>Delete your data:</b> text DELETE or email the address below and it will be removed.</li>
   </ul>
 
   <h2 id="terms">Text message terms</h2>
   <ul>
     <li>You only get texts from Plate after you text Plate first, or after you opt in by texting the number.</li>
-    <li>Plate replies to your messages and sends confirmations about your calendar. Message frequency depends on how much you use it.</li>
+    <li>Plate replies to your messages and texts you your next task. Message frequency depends on how much you use it, with a daily limit.</li>
     <li>Message and data rates may apply.</li>
     <li>Reply <b>STOP</b> at any time to stop receiving texts. Reply <b>HELP</b> for help.</li>
     <li>Your phone number is not shared with third parties for marketing or promotional purposes.</li>
