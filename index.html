@@ -33,6 +33,12 @@
   a { color:var(--accent); }
   footer { margin:56px 0 40px; border-top:1px solid var(--line); padding-top:20px; }
   @media (max-width:520px) { h1 { font-size:36px; } }
+  label.check { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--muted); margin:14px 0; }
+  label.check input { margin-top:3px; flex:none; }
+  #joinPhone { font:inherit; padding:10px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); width:100%; max-width:260px; }
+  #joinBtn { font:inherit; font-weight:700; padding:10px 18px; border:0; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; margin-top:10px; }
+  #joinBtn:disabled { opacity:0.4; cursor:not-allowed; }
+  #joinMsg { font-size:14px; margin-top:10px; }
 </style>
 </head>
 <body>
@@ -48,6 +54,22 @@
       <div class="b pl">Got it. Next up: essay outline, 30 min. You are free at 4:00 PM.</div>
     </div>
   </section>
+
+  <h2>Join Plate</h2>
+  <div class="card">
+    <form id="joinForm">
+      <div>
+        <label for="joinPhone" style="display:block;margin-bottom:6px;">Phone number</label>
+        <input id="joinPhone" name="phone" type="tel" inputmode="tel" placeholder="(555) 555-5555" required>
+      </div>
+      <label class="check">
+        <input id="joinConsent" type="checkbox">
+        <span>I agree to receive text messages from Plate (operated by Cooper Swanson) at the number above. Message frequency varies, with a daily limit. Message and data rates may apply. Reply STOP to cancel, HELP for help. Consent is not a condition of any purchase. See our <a href="#privacy">Privacy</a> and <a href="#terms">Text message terms</a>.</span>
+      </label>
+      <button id="joinBtn" type="submit" disabled>Join Plate</button>
+      <p id="joinMsg" class="fine" role="status"></p>
+    </form>
+  </div>
 
   <h2>What it does</h2>
   <ol class="steps">
@@ -87,5 +109,44 @@
     <p class="fine">Plate is not affiliated with or endorsed by Creighton University or Google.</p>
   </footer>
 </div>
+<script>
+(function () {
+  var ENDPOINT = 'https://sxpvydazoscglscaguto.supabase.co/functions/v1/plate/consent';
+  var form = document.getElementById('joinForm');
+  var phone = document.getElementById('joinPhone');
+  var consent = document.getElementById('joinConsent');
+  var btn = document.getElementById('joinBtn');
+  var msg = document.getElementById('joinMsg');
+  var consentText = form.querySelector('.check span').textContent.trim();
+
+  consent.addEventListener('change', function () { btn.disabled = !consent.checked; });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!consent.checked) return;
+    btn.disabled = true;
+    msg.textContent = 'Joining...';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ phone: phone.value, consent: true, consentText: consentText, url: location.href }),
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok && res.j && res.j.ok) {
+          msg.textContent = "You're in. Text PLATE to get started.";
+          form.reset();
+        } else {
+          msg.textContent = (res.j && res.j.error) || 'Something went wrong. Try again.';
+          btn.disabled = !consent.checked;
+        }
+      })
+      .catch(function () {
+        msg.textContent = 'Something went wrong. Try again.';
+        btn.disabled = !consent.checked;
+      });
+  });
+})();
+</script>
 </body>
 </html>
